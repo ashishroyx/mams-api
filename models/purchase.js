@@ -9,11 +9,11 @@ const purchaseSchema = new mongoose.Schema({
   equipmentType: {
     type: String,
     required: true,
-    trim: true, // Example: 'Weapon', 'Vehicle'
+    trim: true, 
   },
   baseId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Base', // ✅ Refers to existing Base model
+    ref: 'Base', 
     required: true,
   },
   quantity: {

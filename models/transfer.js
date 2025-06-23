@@ -15,6 +15,6 @@ const transferSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ Correct ES6 default export
+
 const Transfer = mongoose.model('Transfer', transferSchema);
 export default Transfer;

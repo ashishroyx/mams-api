@@ -10,10 +10,10 @@ const assignmentSchema = new mongoose.Schema(
       ref: 'Base',
       required: true,
     },
-    assignedTo: { type: String, required: true }, // Person or Unit
+    assignedTo: { type: String, required: true }, 
     assignedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // assuming you have a User model
+      ref: 'User', 
     },
     assignmentDate: { type: Date, default: Date.now },
   },

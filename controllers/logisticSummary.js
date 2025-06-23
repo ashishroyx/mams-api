@@ -10,10 +10,10 @@ export const getLogisticsSummary = async (req, res) => {
 
     const baseFilter = matchBase ? { _id: matchBase } : {};
 
-    // STEP 1: Fetch all bases
+    
     const bases = await Base.find(baseFilter, '_id base_name location');
 
-    // STEP 2: Fetch Expenditures
+    
     const purchases = await Purchase.aggregate([
       { $match: matchBase ? { baseId: matchBase } : {} },
       {
@@ -33,7 +33,7 @@ export const getLogisticsSummary = async (req, res) => {
       };
     });
 
-    // STEP 3: Inventory Calculations
+    
     const purchasesQty = await Purchase.aggregate([
       { $match: matchBase ? { baseId: matchBase } : {} },
       {
@@ -64,7 +64,7 @@ export const getLogisticsSummary = async (req, res) => {
       }
     ]);
 
-    // Combine inventory
+   
     const inventoryMap = new Map();
     const mergeInventory = (arr, modifier = 1) => {
       arr.forEach(({ _id, quantity }) => {
@@ -79,7 +79,7 @@ export const getLogisticsSummary = async (req, res) => {
     mergeInventory(transfersIn, 1);
     mergeInventory(transfersOut, -1);
 
-    // Format inventory
+    
     const inventoryByBase = {};
     inventoryMap.forEach(({ baseId, itemName, equipmentType, quantity }) => {
       if (quantity <= 0) return;
@@ -88,7 +88,7 @@ export const getLogisticsSummary = async (req, res) => {
       inventoryByBase[baseKey].push({ itemName, equipmentType, quantity });
     });
 
-    // STEP 4: Transfer Summary
+    
     const transfers = await Transfer.find(matchBase ? {
       $or: [{ fromBase: matchBase }, { toBase: matchBase }]
     } : {}).populate('fromBase toBase', 'base_name');
@@ -109,7 +109,7 @@ export const getLogisticsSummary = async (req, res) => {
       }
     });
 
-    // STEP 5: Combine All Per Base
+    
     const summary = bases.map(base => {
       const id = base._id.toString();
       return {

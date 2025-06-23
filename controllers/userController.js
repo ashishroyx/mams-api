@@ -37,7 +37,7 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Fetch all users (admin only)
+
 export const getAllUsers = async (req, res) => {
   try {
     if (req.user.role !== 'admin') {

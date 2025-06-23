@@ -1,7 +1,7 @@
 import Assignment from '../models/assignment.js';
 import Base from '../models/base.js';
 
-// 🔹 Create new assignment
+
 export const createAssignment = async (req, res) => {
   try {
     const { itemName, equipmentType, quantity, assignedTo, baseId } = req.body;
@@ -23,7 +23,7 @@ export const createAssignment = async (req, res) => {
   }
 };
 
-// 🔹 Get current assignments for a base or all (based on role)
+
 export const getAssignments = async (req, res) => {
   try {
     const { role, baseId } = req.user;

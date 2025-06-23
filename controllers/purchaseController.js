@@ -1,6 +1,6 @@
 import Purchase from '../models/purchase.js';
 
-// ✅ Create a new purchase
+
 export const addPurchase = async (req, res) => {
   try {
     const newPurchase = new Purchase(req.body);
@@ -11,14 +11,14 @@ export const addPurchase = async (req, res) => {
   }
 };
 
-// ✅ Get all purchases with optional filters
+
 export const getAllPurchases = async (req, res) => {
   try {
     const { startDate, endDate, equipmentType, baseId } = req.query;
 
     const filter = {};
 
-    // 🗓️ Date Range Filter
+   
     if (startDate || endDate) {
       const dateFilter = {};
       if (startDate) {
@@ -34,12 +34,12 @@ export const getAllPurchases = async (req, res) => {
       filter.purchaseDate = dateFilter;
     }
 
-    // 🎯 Equipment Type Filter
+    
     if (equipmentType && equipmentType !== 'All') {
       filter.equipmentType = equipmentType;
     }
 
-    // 🛡️ Base ID Filter
+   
     if (baseId && baseId !== 'All') {
       filter.baseId = baseId;
     }

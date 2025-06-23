@@ -8,10 +8,10 @@ export const getInventory = async (req, res) => {
     const { role, baseId } = req.user;
     const matchBase = role === 'base' ? baseId : null;
 
-    // Step 1: Get all bases (for base name/location lookup)
+
     const bases = await Base.find({}, '_id base_name location');
 
-    // Step 2: Fetch purchases
+ 
     const purchases = await Purchase.aggregate([
       { $match: matchBase ? { baseId: new mongoose.Types.ObjectId(matchBase) } : {} },
       {
@@ -22,7 +22,7 @@ export const getInventory = async (req, res) => {
       }
     ]);
 
-    // Step 3: Fetch incoming transfers
+    
     const transfersIn = await Transfer.aggregate([
       { $match: matchBase ? { toBase: new mongoose.Types.ObjectId(matchBase) } : {} },
       {
@@ -33,7 +33,7 @@ export const getInventory = async (req, res) => {
       }
     ]);
 
-    // Step 4: Fetch outgoing transfers
+  
     const transfersOut = await Transfer.aggregate([
       { $match: matchBase ? { fromBase: new mongoose.Types.ObjectId(matchBase) } : {} },
       {
@@ -44,7 +44,7 @@ export const getInventory = async (req, res) => {
       }
     ]);
 
-    // Step 5: Combine all inventory calculations
+    
     const inventoryMap = new Map();
 
     const addToMap = (arr, modifier = 1) => {
@@ -60,11 +60,11 @@ export const getInventory = async (req, res) => {
     addToMap(transfersIn, 1);
     addToMap(transfersOut, -1);
 
-    // Step 6: Convert to final result with base details
+    
     const inventory = [];
 
     inventoryMap.forEach(({ baseId, equipmentType, itemName, quantity }) => {
-      if (quantity <= 0) return; // Don't show zero/negative stock
+      if (quantity <= 0) return; 
 
       const base = bases.find(b => b._id.toString() === baseId.toString());
       if (base) {
@@ -79,7 +79,7 @@ export const getInventory = async (req, res) => {
       }
     });
 
-    // Sort final result
+  
     inventory.sort((a, b) => a.base.localeCompare(b.base));
 
     res.status(200).json({ success: true, inventory });

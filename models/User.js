@@ -7,12 +7,12 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ["admin", "logistic", "base"], required: true },
   profileimg: { type: String },
 
-  // ✅ New field to link base users to their base
+  
   baseId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Base',
     required: function () {
-      return this.role === 'base'; // Required only for base users
+      return this.role === 'base'; 
     }
   },
 

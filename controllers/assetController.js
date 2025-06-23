@@ -4,7 +4,7 @@ export const addAsset = async (req, res) => {
   try {
     const assetData = req.body;
 
-    // Initialize budgetHistory with first entry if budget is present
+
     if (assetData.budget) {
       assetData.budgetHistory = [{
         amount: assetData.budget,
@@ -57,7 +57,7 @@ export const updateAsset = async (req, res) => {
 
     const newBudget = req.body.budget;
 
-    // If budget has changed, push to budgetHistory
+   
     if (newBudget !== undefined && newBudget !== asset.budget) {
       asset.budgetHistory.push({
         amount: newBudget,
@@ -65,7 +65,7 @@ export const updateAsset = async (req, res) => {
       });
     }
 
-    // Update other fields
+   
     Object.assign(asset, req.body);
 
     const updated = await asset.save();

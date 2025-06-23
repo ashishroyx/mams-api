@@ -1,10 +1,8 @@
 
-// controllers/basecontroller.js
+
 import Base from '../models/base.js';
 
-// @desc   Create a new base
-// @route  POST /api/base/add
-// @access Private (Admin only)
+
 export const createBase = async (req, res) => {
   try {
     const { base_name, location, commander_name, description } = req.body;
@@ -23,8 +21,7 @@ export const createBase = async (req, res) => {
   }
 };
 
-// @desc   Get all bases
-// @route  GET /api/base
+
 export const getAllBases = async (req, res) => {
   try {
     const bases = await Base.find().sort({ createdAt: -1 });
@@ -35,8 +32,7 @@ export const getAllBases = async (req, res) => {
   }
 };
 
-// @desc   Get base by ID
-// @route  GET /api/base/:id
+
 export const getBaseById = async (req, res) => {
   try {
     const base = await Base.findById(req.params.id);
@@ -50,8 +46,7 @@ export const getBaseById = async (req, res) => {
   }
 };
 
-// @desc   Update base
-// @route  PUT /api/base/:id
+
 export const updateBase = async (req, res) => {
   try {
     const { base_name, location, commander_name, description } = req.body;
@@ -73,8 +68,7 @@ export const updateBase = async (req, res) => {
   }
 };
 
-// @desc   Delete base
-// @route  DELETE /api/base/:id
+
 export const deleteBase = async (req, res) => {
   try {
     const deletedBase = await Base.findByIdAndDelete(req.params.id);

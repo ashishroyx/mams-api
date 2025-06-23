@@ -3,8 +3,7 @@ import Base from '../models/base.js';
 
 const router = express.Router();
 
-// @desc Add a new base
-// @route POST /api/base/add
+
 router.post('/add', async (req, res) => {
   try {
     const { base_name, location, commander_name, description } = req.body;
@@ -23,8 +22,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// @desc Get all bases
-// @route GET /api/base/all
+
 router.get('/all', async (req, res) => {
   try {
     const bases = await Base.find().sort({ createdAt: -1 });
@@ -35,22 +33,20 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// ✅ @desc Get base by ID
-// ✅ @route GET /api/base/:id
+
 router.get('/:id', async (req, res) => {
   try {
     const base = await Base.findById(req.params.id);
     if (!base) return res.status(404).json({ success: false, error: 'Base not found' });
 
-    res.status(200).json(base); // send raw base object
+    res.status(200).json(base); 
   } catch (error) {
     console.error('Error fetching base:', error);
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });
 
-// ✅ @desc Update base by ID
-// ✅ @route PUT /api/base/:id
+
 router.put('/:id', async (req, res) => {
   try {
     const { base_name, location, commander_name, description } = req.body;

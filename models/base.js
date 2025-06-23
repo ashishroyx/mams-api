@@ -1,4 +1,4 @@
-// models/base.js
+
 import mongoose from "mongoose";
 
 const baseSchema = new mongoose.Schema(

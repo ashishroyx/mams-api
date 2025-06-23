@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-// 🔐 Protected Routes
+
 router.post('/', verifyUser, createAssignment);
 router.get('/', verifyUser, getAssignments);
 
