@@ -3,7 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectTodatabase from './db/db.js';
 
-
 import authRouter from './routes/auth.js';
 import baseRouter from './routes/base.js';
 import assetRouter from './routes/asset.js';
@@ -17,12 +16,27 @@ dotenv.config();
 connectTodatabase();
 
 const app = express();
+
+// ✅ CORS configuration
+const allowedOrigins = ['https://mams-frontend.vercel.app'];
+
 app.use(cors({
-  origin: 'https://mams-frontend.vercel.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
 }));
+
+// ✅ Handle preflight requests for all routes
+app.options('*', cors());
+
+// Middleware
 app.use(express.json());
 
 // API Routes
@@ -34,6 +48,7 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/transfer', transferRoutes);
 app.use('/api/expenditure', expenditureRoutes);
 app.use('/api/user', userRoutes);
+
 // Start server
 app.listen(process.env.PORT, () => {
   console.log(`Server is Running on port ${process.env.PORT}`);
