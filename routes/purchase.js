@@ -1,13 +1,11 @@
 import express from 'express';
-import { addPurchase, getAllPurchases } from '../controllers/purchaseController.js';
-import verifyToken from '../middleware/authMiddleware.js';
+import { getInventory } from '../controllers/inventoryController.js';
+import { getExpenditures } from '../controllers/expenditureController.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-
-router.post('/', verifyToken, addPurchase);
-
-
-router.get('/', verifyToken, getAllPurchases);
+router.get('/inventory', authMiddleware, getInventory);
+router.get('/expenditure', authMiddleware, getExpenditures);
 
 export default router;
