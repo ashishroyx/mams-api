@@ -17,8 +17,8 @@ connectTodatabase();
 
 const app = express();
 
+// ✅ CORS Setup
 const allowedOrigins = ['https://mams-frontend.vercel.app', 'http://localhost:5173'];
-
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -32,10 +32,13 @@ app.use(cors({
   credentials: true,
 }));
 
+// ✅ Preflight CORS requests
 app.options('*', cors());
 
+// ✅ Middleware
 app.use(express.json());
 
+// ✅ API Routes
 app.use('/api/auth', authRouter);
 app.use('/api/base', baseRouter);
 app.use('/api/asset', assetRouter);
@@ -45,12 +48,13 @@ app.use('/api/transfer', transferRoutes);
 app.use('/api/expenditure', expenditureRoutes);
 app.use('/api/user', userRoutes);
 
-// ✅ If running locally:
+// ✅ Run only locally
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
-// ✅ If on Vercel: export the app
+// ✅ Export for Vercel
 export default app;
